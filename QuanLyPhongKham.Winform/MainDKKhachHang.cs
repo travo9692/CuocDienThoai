@@ -17,11 +17,12 @@ namespace QuanLyPhongKham.Winform
     {
         private bool isNew = true;
         private LibraryService libraryService;
-        private Model.DTO.KhachHang khachHang;
+        private KhachHang khachHang;
         public MainDKKhachHang()
         {
             InitializeComponent();
-            khachHang = new Model.DTO.KhachHang();
+            libraryService = ServiceFactory.GetLibraryService(LibraryParameter.persistancestrategy);
+            khachHang = new KhachHang();
         }
 
         /// <summary>
@@ -51,7 +52,7 @@ namespace QuanLyPhongKham.Winform
             InitializeComponent();
             this.Text = title;
             btnAddEdit.Text = btnText;
-            khachHang = new Model.DTO.KhachHang();
+            khachHang = new KhachHang();
         }
 
         private void MainDKKhachHang_Load(object sender, EventArgs e)
@@ -77,14 +78,11 @@ namespace QuanLyPhongKham.Winform
             khachHang.DiaChi = txtDiaChi.Text;
             khachHang.NgheNghiep = txtNgheNghiep.Text;
             khachHang.CMND = txtCMND.Text;
-
+            khachHang.Status = false;
 
             //code cho phần thêm mới khách hàng
             if (isNew)
-            {
-                //BenhNhan benhNhan = new BenhNhan();
-               
-
+            {              
                 bool result = libraryService.ThemKH(khachHang);
 
                 if (result)

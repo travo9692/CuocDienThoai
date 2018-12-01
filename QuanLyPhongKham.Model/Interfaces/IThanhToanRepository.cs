@@ -11,6 +11,7 @@ namespace QuanLyPhongKham.Model.Interfaces
     {
         List<HoaDonThanhToan> DanhSachHDTT();
         List<HoaDonThanhToan> TimKiemHDTT(string col, string info);
+        List<HoaDonThanhToan> TimKiemByMaKHHDTT(string info);
         bool ThemHDTT(HoaDonThanhToan hoaDonThanhToan);
         bool UpdateHDTT(HoaDonThanhToan hoaDonThanhToan);
     }

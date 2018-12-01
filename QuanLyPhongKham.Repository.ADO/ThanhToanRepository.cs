@@ -35,8 +35,8 @@ namespace QuanLyPhongKham.Repository.ADO
         /// <returns></returns>
         public bool ThemHDTT(HoaDonThanhToan thanhToan)
         {
-            int row = DataProvider.Instane.ExecuteNonQuery("EXEC dbo.SP_InsertHDTT @MaKH , @MaSim ," +
-                                        " @CuocThueBao , @TG_TaoHoaDon , @ThanhToan, @ThanhTien, @Status",
+            int row = DataProvider.Instane.ExecuteNonQuery("EXEC dbo.SP_TaoHDThanhToan @MaKH , @MaSim ," +
+                                        " @CuocThueBao , @TG_TaoHoaDon , @ThanhToan , @ThanhTien , @Status ",
                                         new object[] { thanhToan.MaKH, thanhToan.MaSim, thanhToan.CuocThueBao, thanhToan.TG_TaoHoaDon, thanhToan.ThanhToan, thanhToan.ThanhTien, thanhToan.Status});
             return row > 0;
         }
@@ -66,10 +66,28 @@ namespace QuanLyPhongKham.Repository.ADO
         /// <returns></returns>
         public bool UpdateHDTT(HoaDonThanhToan thanhToan)
         {
-            int row = DataProvider.Instane.ExecuteNonQuery("EXEC dbo.SP_UpdateHDTT @MaHD, @MaKH , @MaSim ," +
-                                        " @CuocThueBao , @TG_TaoHoaDon , @ThanhToan, @ThanhTien, @Status",
-                                        new object[] { thanhToan.MaHD,thanhToan.MaKH, thanhToan.MaSim, thanhToan.CuocThueBao, thanhToan.TG_TaoHoaDon, thanhToan.ThanhToan, thanhToan.ThanhTien, thanhToan.Status });
+            int row = DataProvider.Instane.ExecuteNonQuery("EXEC dbo.SP_UpdateDHTT @MaKH , @MaSim ," +
+                                        " @CuocThueBao , @TG_TaoHoaDon , @ThanhToan , @ThanhTien , @Status ",
+                                        new object[] { thanhToan.MaKH, thanhToan.MaSim, thanhToan.CuocThueBao, thanhToan.TG_TaoHoaDon, thanhToan.ThanhToan, thanhToan.ThanhTien, thanhToan.Status });
             return row > 0;
+        }
+
+        /// <summary>
+        /// tìm kiếm hoa don thanh toan theo tên
+        /// </summary>
+        /// <param name="col">cột trong database</param>
+        /// <param name="info">thông tin cần tìm</param>
+        /// <returns></returns>
+        public List<HoaDonThanhToan> TimKiemByMaKHHDTT(string info)
+        {
+            List<HoaDonThanhToan> list = new List<HoaDonThanhToan>();
+            DataTable table = DataProvider.Instane.ExecuteReader(" EXEC  dbo.SP_GetHDTT @ThongTin ", new object[] { info });
+
+            foreach (DataRow row in table.Rows)
+            {
+                list.Add(new HoaDonThanhToan(row));
+            }
+            return list;
         }
     }
 }

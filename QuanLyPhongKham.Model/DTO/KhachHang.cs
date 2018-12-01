@@ -9,7 +9,7 @@ namespace QuanLyPhongKham.Model.DTO
 {
     public class KhachHang
     {
-        public KhachHang(int maKH, string tenKH, string cmnd, string ngheNghiep, string diaChi, int status)
+        public KhachHang(int maKH, string tenKH, string cmnd, string ngheNghiep, string diaChi, bool status)
         {
             MaKH = maKH;
             TenKH = tenKH;
@@ -26,7 +26,7 @@ namespace QuanLyPhongKham.Model.DTO
             CMND = (string)row["CMND"];
             NgheNghiep = (string)row["NGHENGHIEP"];
             DiaChi = (string)row["DIACHI"];
-            Status = (int)row["STATUS"];        
+            Status = (bool)row["STATUS"];        
         }
 
         public KhachHang() { }
@@ -38,7 +38,7 @@ namespace QuanLyPhongKham.Model.DTO
         public string CMND { get; set; }
         public string NgheNghiep { get; set; }
         public string DiaChi { get; set; }
-        public int Status { get; set; }
+        public bool Status { get; set; }
 
     }
 }

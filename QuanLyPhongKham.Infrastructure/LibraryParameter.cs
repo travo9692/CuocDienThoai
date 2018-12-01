@@ -14,7 +14,7 @@ namespace QuanLyPhongKham.Infrastructure
         {
             get
             {
-                return ConfigurationManager.ConnectionStrings["QLCuocDT"].ToString();
+                return ConfigurationManager.ConnectionStrings["QuanLyCuocDienThoai"].ToString();
             }
         }
 

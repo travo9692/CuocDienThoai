@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d60dd5d934954dd6981de78d895fe4e9" Name="Diagram1">
+        <EntityTypeShape EntityType="CUOC_DIENTHOAIModel.CuocGoi" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CUOC_DIENTHOAIModel.HoaDonDK" Width="1.5" PointX="3" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CUOC_DIENTHOAIModel.HoaDonThanhToan" Width="1.5" PointX="6" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CUOC_DIENTHOAIModel.KhachHang" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CUOC_DIENTHOAIModel.Sim" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CUOC_DIENTHOAIModel.sysdiagram" Width="1.5" PointX="5.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="CUOC_DIENTHOAIModel.LoaiCuoc" Width="1.5" PointX="7.75" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="CUOC_DIENTHOAIModel.FK_CuocGoi_Sim" ManuallyRouted="false" />
+        <AssociationConnector Association="CUOC_DIENTHOAIModel.FK_HoaDonDK_KhachHang" ManuallyRouted="false" />
+        <AssociationConnector Association="CUOC_DIENTHOAIModel.FK_HoaDonDK_Sim" ManuallyRouted="false" />
+        <AssociationConnector Association="CUOC_DIENTHOAIModel.FK_HoaDonThanhToan_KhachHang" ManuallyRouted="false" />
+        <AssociationConnector Association="CUOC_DIENTHOAIModel.FK_HoaDonThanhToan_Sim" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

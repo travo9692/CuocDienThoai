@@ -15,11 +15,11 @@ namespace QuanLyPhongKham.Repository.ADO
         /// lấy danh sách HoaDonDK trong database
         /// </summary>
         /// <returns></returns>
-        public List<HoaDonDK> DanhSachHoaDonDK()
+        public List<HoaDonDK> GetHoaDonDK(KhachHang kh)
         {
             List<HoaDonDK> list = new List<HoaDonDK>();
 
-            DataTable table = DataProvider.Instane.ExecuteReader("EXECUTE dbo.SP_DanhSachHoaDonDK");
+            DataTable table = DataProvider.Instane.ExecuteReader("EXECUTE dbo.SP_GetHDDangKi @MaKH", new object[] { kh.MaKH });
 
             foreach (DataRow row in table.Rows)
             {
@@ -35,7 +35,7 @@ namespace QuanLyPhongKham.Repository.ADO
         /// <returns></returns>
         public bool ThemHoaDonDK(HoaDonDK hoaDonDK)
         {
-            int row = DataProvider.Instane.ExecuteNonQuery("EXEC dbo.SP_InsertHoaDonDK @MaSim , @TG_DangKy , @ChiPhi , @MaKH",
+            int row = DataProvider.Instane.ExecuteNonQuery("EXEC dbo.SP_TaoHDDangKi @MaSim , @TG_DangKy , @ChiPhi , @MaKH",
                                         new object[] { hoaDonDK.MaSim, hoaDonDK.TG_DangKy,
                           hoaDonDK.ChiPhi, hoaDonDK.MaKH});
             return row > 0;

@@ -28,6 +28,19 @@ namespace QuanLyPhongKham.Repository.ADO
             return list;
         }
 
+        public List<Sim> TimKiemMaSimMax()
+        {
+            List<Sim> list = new List<Sim>();
+
+            DataTable table = DataProvider.Instane.ExecuteReader("EXECUTE dbo.SP_TimKiemMaSimMax");
+
+            foreach (DataRow row in table.Rows)
+            {
+                list.Add(new Sim(row));
+            }
+            return list;
+        }
+
         /// <summary>
         /// thêm Sim vào database
         /// </summary>
@@ -58,6 +71,17 @@ namespace QuanLyPhongKham.Repository.ADO
             return list;
         }
 
+        public List<Sim> TimKiemSimSo(string info)
+        {
+            List<Sim> list = new List<Sim>();
+            //DataTable table = DataProvider.Instane.ExecuteReader(" EXEC  dbo.SP_TimKiemSimSo @ThongTin ", new object[] { info });
+
+            //foreach (DataRow row in table.Rows)
+            //{
+            //    list.Add(new Sim(row));
+            //}
+            return list;
+        }
         /// <summary>
         /// Cập nhật thông tin cho Sim
         /// </summary>

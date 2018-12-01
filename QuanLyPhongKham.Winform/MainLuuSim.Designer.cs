@@ -58,6 +58,7 @@
             this.button1.TabIndex = 2;
             this.button1.Text = "Hủy bỏ";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // bttAddEdit
             // 
@@ -67,6 +68,7 @@
             this.bttAddEdit.TabIndex = 3;
             this.bttAddEdit.Text = "Lưu";
             this.bttAddEdit.UseVisualStyleBackColor = true;
+            this.bttAddEdit.Click += new System.EventHandler(this.bttAddEdit_Click);
             // 
             // MainLuuSim
             // 
@@ -82,6 +84,7 @@
             this.Name = "MainLuuSim";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Lưu sim";
+            this.Load += new System.EventHandler(this.MainLuuSim_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

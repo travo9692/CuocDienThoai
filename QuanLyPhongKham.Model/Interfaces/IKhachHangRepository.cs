@@ -13,5 +13,6 @@ namespace QuanLyPhongKham.Model.Interfaces
         List<KhachHang> TimKiemKH(string col, string info);
         bool ThemKH(KhachHang khachHang);
         bool UpdateKH(KhachHang khachHang);
+        bool UpdateKHStatus(KhachHang khachHang);
     }
 }

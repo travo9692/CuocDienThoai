@@ -14,7 +14,7 @@ namespace QuanLyPhongKham.Winform
         private TaiKhoan nhanVien;
         private LibraryService libraryService;
         private static List<Model.DTO.KhachHang> listKH;
-        //private static List<PhieuKhamGUI> listPhieuKham;
+        private static List<HoaDonThanhToan> listHDTT;
         public static Model.DTO.KhachHang khachHangStatic;
 
         /// <summary>
@@ -24,14 +24,12 @@ namespace QuanLyPhongKham.Winform
         {
             InitializeComponent();
             libraryService = ServiceFactory.GetLibraryService(LibraryParameter.persistancestrategy);
-            //benhNhanStatic = new BenhNhan();
         }
 
         public MainFormCuocDT(TaiKhoan nhanVien)
         {
             InitializeComponent();
             libraryService = ServiceFactory.GetLibraryService(LibraryParameter.persistancestrategy);
-            //benhNhanStatic = new BenhNhan();
             this.nhanVien = nhanVien;
         }
 
@@ -42,17 +40,14 @@ namespace QuanLyPhongKham.Winform
         /// <param name="e"></param>
         private void MainFormCuocDT_Load(object sender, EventArgs e)
         {
-            //load danh sách bệnh nhân cho datagridview
+
             LoadDanhSachKH();
 
-            //load danh sach phieu kham cho dgvDanhSachPhieuKham
             DateTime date = DateTime.Now;
-            //listPhieuKham = libraryService.DanhSachPhieuKhamGUI(date);
-            //LoadPhieuKham(listPhieuKham);
 
             //set thuộc tính đầu tiên cho combobox tim kiem
-            cbxTimKiem.SelectedIndex = 1;
-            cbbTimKiemThanhToan.SelectedIndex = 1;
+            cbxTimKiem.SelectedIndex = 0;
+            cbbTimKiemThanhToan.SelectedIndex = 0;
         }
 
        
@@ -70,6 +65,17 @@ namespace QuanLyPhongKham.Winform
             foreach (Model.DTO.KhachHang item in listKH)
             {
                 dgvDanhSachKH.Rows.Add(item.MaKH, item.TenKH, item.NgheNghiep,item.CMND, item.DiaChi, item.Status);
+            }
+        }
+
+        private void LoadDanhSachHDTT()
+        {
+            listHDTT = libraryService.DanhSachHDTT();
+            dgvDanhSachHoaDonThanhToan.Rows.Clear();
+            dgvDanhSachHoaDonThanhToan.Refresh();
+            foreach (HoaDonThanhToan item in listHDTT)
+            {
+                dgvDanhSachHoaDonThanhToan.Rows.Add(item.MaHD, item.MaKH, item.MaSim, item.CuocThueBao, item.TG_TaoHoaDon, item.ThanhToan);
             }
         }
 
@@ -115,8 +121,37 @@ namespace QuanLyPhongKham.Winform
 
         private void btnThongTinThanhToan_Click(object sender, EventArgs e)
         {
+            if (dgvDanhSachKH.SelectedRows.Count > 0)
+            {
+                DataGridViewRow row = this.dgvDanhSachKH.SelectedRows[0];
+                string maKH = row.Cells[0].Value.ToString();
 
+                MainThongTinThanhToan f = new MainThongTinThanhToan("Xem thông tin thanh toán", maKH);
+                f.ShowDialog();
 
+                if (f.DialogResult != DialogResult.Cancel)
+                {
+                    LoadDanhSachKH();
+                }
+            }
+        }
+
+        private void btnThanhToan_Click(object sender, EventArgs e)
+        {
+            if (dgvDanhSachKH.SelectedRows.Count > 0)
+            {
+                DataGridViewRow row = this.dgvDanhSachKH.SelectedRows[0];
+                string maKH = row.Cells[0].Value.ToString();
+                KhachHang khachHang = listKH.Single(p => p.MaKH == (int)row.Cells[0].Value);
+                MainThanhToan f = new MainThanhToan("Tiến hành thanh toán", maKH);
+                f.ShowDialog();
+                khachHang.Status = true;
+                if (f.DialogResult != DialogResult.Cancel)
+                {
+                    libraryService.UpdateKHStatus(khachHang);
+                    LoadDanhSachKH();
+                }
+            }
         }
 
         private void bttThemSim_Click(object sender, EventArgs e)
@@ -137,25 +172,7 @@ namespace QuanLyPhongKham.Winform
         /// <param name="e"></param>
         private void btnTimKiemBenhNhan_Click_1(object sender, EventArgs e)
         {
-            string cot = "";
-            switch (cbxTimKiem.SelectedIndex)
-            {
-                case 0:
-                    cot = "*";
-                    break;
-
-                case 1:
-                    cot = "MaKH";
-                    break;
-
-                case 2:
-                    cot = "TenKH";
-                    break;
-
-                case 3:
-                    cot = "CMND";
-                    break;
-            }
+            string cot = "TenKH";
             if (txtTimKiem.Text == "" && cbxTimKiem.SelectedIndex != 0)
             {
                 MessageBox.Show("Vui lòng nhập thông tin cần tìm!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -170,7 +187,7 @@ namespace QuanLyPhongKham.Winform
                 {
                     dgvDanhSachKH.Rows.Clear();
                     dgvDanhSachKH.Refresh();
-                    foreach (Model.DTO.KhachHang item in libraryService.TimKiemKH(cot, txtTimKiem.Text))
+                    foreach (Model.DTO.KhachHang item in libraryService.TimKiemKH(cot, txtTimKiem.Text.ToString()))
                     {
                         dgvDanhSachKH.Rows.Add(item.MaKH, item.TenKH, item.NgheNghiep, item.CMND, item.DiaChi, item.Status);
                     }
@@ -189,24 +206,8 @@ namespace QuanLyPhongKham.Winform
             switch (cbbTimKiemThanhToan.SelectedIndex)
             {
                 case 0:
-                    cot = "*";
-                    break;
-
-                case 1:
-                    cot = "MaHD";
-                    break;
-
-                case 2:
-                    cot = "IDSim";
-                    break;
-
-                case 3:
                     cot = "TenKH";
                     break;
-
-                case 4:
-                    cot = "CMND";
-                break;
         }
             if (txtTimKiemThanhToan.Text == "" && cbbTimKiemThanhToan.SelectedIndex != 0)
             {
@@ -254,10 +255,6 @@ namespace QuanLyPhongKham.Winform
 
                 case 3:
                     cot = "TenKH";
-                    break;
-
-                case 4:
-                    cot = "CMND";
                     break;
             }
             if (txtTimKiemSim.Text == "" && cbbTimKiemSim.SelectedIndex != 0)

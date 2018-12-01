@@ -15,7 +15,6 @@ namespace QuanLyPhongKham.Services
             {
                 libraryService = new LibraryService(
                     new QuanLyPhongKham.Repository.ADO.KhachHangRepository(),
-                    new QuanLyPhongKham.Repository.ADO.TaiKhoanRepository(),
                     new QuanLyPhongKham.Repository.ADO.ThanhToanRepository(),
                     new QuanLyPhongKham.Repository.ADO.SimRepository(),
                     new QuanLyPhongKham.Repository.ADO.LoaiCuocRepository(),

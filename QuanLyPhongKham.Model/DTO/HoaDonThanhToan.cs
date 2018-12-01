@@ -9,7 +9,7 @@ namespace QuanLyPhongKham.Model.DTO
 {
     public class HoaDonThanhToan
     {
-        public HoaDonThanhToan(int maHD, int maKH, int maSim, decimal cuocTB, DateTime tgTaoHD, int thanhToan, decimal thanhTien, int stt)
+        public HoaDonThanhToan(int maHD, int maKH, int maSim, decimal cuocTB, DateTime tgTaoHD, bool thanhToan, decimal thanhTien, bool stt)
         {
             MaHD = maHD;
             MaKH = maKH;
@@ -29,9 +29,9 @@ namespace QuanLyPhongKham.Model.DTO
             MaSim = (int)row["MaSim"];
             CuocThueBao = (decimal)row["CuocThueBao"];
             TG_TaoHoaDon = (DateTime)row["TG_TaoHoaDon"];
-            ThanhToan = (int)row["ThanhToan"];
+            ThanhToan = (bool)row["ThanhToan"];
             ThanhTien = (decimal)row["ThanhTien"];
-            Status = (int)row["Status"];
+            Status = (bool)row["Status"];
         }
 
         public HoaDonThanhToan() { }
@@ -43,8 +43,8 @@ namespace QuanLyPhongKham.Model.DTO
         public int MaSim { get; set; }
         public decimal CuocThueBao { get; set; }
         public DateTime TG_TaoHoaDon { get; set; }
-        public int ThanhToan { get; set; }
+        public bool ThanhToan { get; set; }
         public decimal ThanhTien { get; set; }
-        public int Status { get; set; }
+        public bool Status { get; set; }
     }
 }

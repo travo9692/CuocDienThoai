@@ -16,13 +16,13 @@ namespace QuanLyPhongKham.Winform
 {
     public partial class MainLuuSim : Form
     {
-        private bool isNew = true;
+        public static string so;
         private LibraryService libraryService;
-        private Model.DTO.Sim sim;
+        private Sim sim;
         public MainLuuSim()
         {
             InitializeComponent();
-            sim = new Model.DTO.Sim();
+            sim = new Sim();
         }
 
         /// <summary>
@@ -37,11 +37,7 @@ namespace QuanLyPhongKham.Winform
             this.Text = title;
             bttAddEdit.Text = btnText;
             this.sim = sim;
-            isNew = false;
 
-            #region Code đổ dữ liệu vào các textbox
-            txtSim.Text = sim.SoSim.ToString();
-            #endregion
         }
 
         public MainLuuSim(string title, string btnText)
@@ -49,18 +45,39 @@ namespace QuanLyPhongKham.Winform
             InitializeComponent();
             this.Text = title;
             bttAddEdit.Text = btnText;
-            sim = new Model.DTO.Sim();
+            sim = new Sim();
         }
 
-        private void MainDKKhachHang_Load(object sender, EventArgs e)
+        private void MainLuuSim_Load(object sender, EventArgs e)
         {
             libraryService = ServiceFactory.GetLibraryService(LibraryParameter.persistancestrategy);
             txtSim.Focus();
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void bttAddEdit_Click(object sender, EventArgs e)
+        {
+            sim.SoSim = long.Parse(txtSim.Text);
+            sim.Status = true;
+            long simso = long.Parse(txtSim.Text);
+            bool result = libraryService.ThemSim(sim);
+
+            if (result)
+            {
+                so = txtSim.Text;
+                if (DialogResult.OK == MessageBox.Show("Thêm thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information))
+                {
+                    DialogResult = DialogResult.OK;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Lỗi không thêm được");
+            }
         }
     }
 }
